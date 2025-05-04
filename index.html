@@ -60,33 +60,36 @@
 
     const carousel = document.querySelector('.carousel-container');
 
-    // Click (non-button) triggers next slide
+    // ✅ Click handling (ignore buttons/links)
     carousel.addEventListener('click', function (e) {
       if (e.target.closest('a') || e.target.closest('button')) return;
       nextSlide();
     });
 
-    // Swipe logic with vertical tolerance
+    // ✅ Swipe handling with vertical scroll pass-through
     let touchStartX = 0;
     let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
 
-carousel.addEventListener('touchend', function (e) {
-  touchEndX = e.changedTouches[0].screenX;
-  touchEndY = e.changedTouches[0].screenY;
+    carousel.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true }); // Allow scrolling by default
 
-  const deltaX = touchEndX - touchStartX;
-  const deltaY = touchEndY - touchStartY;
+    carousel.addEventListener('touchend', function (e) {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
 
-  // Only advance carousel if gesture is strongly horizontal
-  if (Math.abs(deltaX) > 2 * Math.abs(deltaY)) {
-    if (deltaX < -50) nextSlide();
-    else if (deltaX > 50) prevSlide();
-  }
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
 
-  // Do not call e.preventDefault() — this allows vertical scroll
-}, { passive: true });
+      // Only act on horizontal swipe
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < -50) nextSlide();
+        if (deltaX > 50) prevSlide();
+        e.preventDefault(); // Prevent accidental horizontal scroll
+      }
+      // Vertical swipes scroll the page — no preventDefault
+    }, { passive: false }); // Allow us to optionally prevent horizontal scroll
   });
 </script>
 </body>

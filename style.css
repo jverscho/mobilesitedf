@@ -91,7 +91,7 @@ body {
 .poster-title {
   text-align: center;
   margin-bottom: 10px;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .poster-title h2 {

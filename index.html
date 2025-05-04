@@ -35,48 +35,63 @@
 
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const items = document.querySelectorAll('.carousel-item');
-      let current = 0;
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll('.carousel-item');
+    let current = 0;
 
-      function updateCarousel() {
-        items.forEach((item, index) => {
-          item.classList.toggle('active', index === current);
-        });
-      }
-
-      function nextSlide() {
-        current = (current + 1) % items.length;
-        updateCarousel();
-      }
-
-      function prevSlide() {
-        current = (current - 1 + items.length) % items.length;
-        updateCarousel();
-      }
-
-      updateCarousel();
-
-      const carousel = document.querySelector('.carousel-container');
-      carousel.addEventListener('click', function (e) {
-        if (e.target.closest('a') || e.target.closest('button')) return;
-        nextSlide();
+    function updateCarousel() {
+      items.forEach((item, index) => {
+        item.classList.toggle('active', index === current);
       });
+    }
 
-      let touchStartX = 0;
-      let touchEndX = 0;
+    function nextSlide() {
+      current = (current + 1) % items.length;
+      updateCarousel();
+    }
 
-      carousel.addEventListener('touchstart', function (e) {
-        touchStartX = e.changedTouches[0].screenX;
-      }, false);
+    function prevSlide() {
+      current = (current - 1 + items.length) % items.length;
+      updateCarousel();
+    }
 
-      carousel.addEventListener('touchend', function (e) {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) nextSlide();
-        if (touchEndX > touchStartX + 50) prevSlide();
-      }, false);
+    updateCarousel();
+
+    const carousel = document.querySelector('.carousel-container');
+
+    // Click (non-button) triggers next slide
+    carousel.addEventListener('click', function (e) {
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      nextSlide();
     });
-  </script>
+
+    // Swipe logic with vertical tolerance
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    carousel.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, false);
+
+    carousel.addEventListener('touchend', function (e) {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      // Only trigger horizontal swipe if horizontal movement dominates
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < -50) nextSlide();
+        if (deltaX > 50) prevSlide();
+      }
+      // Vertical swipe will scroll the page normally
+    }, false);
+  });
+</script>
 </body>
 </html>

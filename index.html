@@ -38,37 +38,48 @@
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const items = document.querySelectorAll('.double-carousel-item');
-    let current = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+      const items = document.querySelectorAll('.carousel-item');
+      let current = 0;
 
-    function updateCarousel() {
-      items.forEach((item, index) => {
-        item.classList.toggle('active', index === current);
-      });
-    }
+      function updateCarousel() {
+        items.forEach((item, index) => {
+          item.classList.toggle('active', index === current);
+        });
+      }
 
-    function nextSlide() {
-      current = (current + 1) % items.length;
+      function nextSlide() {
+        current = (current + 1) % items.length;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        current = (current - 1 + items.length) % items.length;
+        updateCarousel();
+      }
+
       updateCarousel();
-    }
 
-    function prevSlide() {
-      current = (current - 1 + items.length) % items.length;
-      updateCarousel();
-    }
-
-    updateCarousel();
-
-    const carousel = document.querySelector('.double-carousel-container');
-
-    if (carousel) {
-      carousel.addEventListener('click', () => {
+      const carousel = document.querySelector('.carousel-container');
+      carousel.addEventListener('click', function (e) {
+        if (e.target.closest('a') || e.target.closest('button')) {
+          return; // Don’t trigger carousel advance
+        }
         nextSlide();
       });
 
+      // Swipe gesture support
       let touchStartX = 0;
       let touchEndX = 0;
+
+      function handleGesture() {
+        if (touchEndX < touchStartX - 50) {
+          nextSlide();
+        }
+        if (touchEndX > touchStartX + 50) {
+          prevSlide();
+        }
+      }
 
       carousel.addEventListener('touchstart', function (e) {
         touchStartX = e.changedTouches[0].screenX;
@@ -76,11 +87,9 @@
 
       carousel.addEventListener('touchend', function (e) {
         touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) nextSlide();
-        if (touchEndX > touchStartX + 50) prevSlide();
+        handleGesture();
       }, false);
-    }
-  });
+    });
   </script>
 </body>
 </html>

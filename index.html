@@ -60,39 +60,36 @@
 
     const carousel = document.querySelector('.carousel-container');
 
-    // 🟡 Handle tap/click
+    // ✅ Click (except on links/buttons)
     carousel.addEventListener('click', function (e) {
       if (e.target.closest('a') || e.target.closest('button')) return;
       nextSlide();
     });
 
-    // 🟢 Robust swipe with scroll passthrough
+    // ✅ Swipe + allow vertical scrolling
     let touchStartX = 0;
     let touchStartY = 0;
-    let scrolling = false;
 
     carousel.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-      scrolling = false;
-    }, { passive: true });
-
-    carousel.addEventListener('touchmove', function (e) {
-      const moveY = e.changedTouches[0].screenY;
-      if (Math.abs(moveY - touchStartY) > 10) {
-        scrolling = true; // it's a vertical scroll
-      }
+      const touch = e.changedTouches[0];
+      touchStartX = touch.screenX;
+      touchStartY = touch.screenY;
     }, { passive: true });
 
     carousel.addEventListener('touchend', function (e) {
-      if (scrolling) return; // Don't trigger if it was vertical scroll
+      const touch = e.changedTouches[0];
+      const deltaX = touch.screenX - touchStartX;
+      const deltaY = touch.screenY - touchStartY;
 
-      const touchEndX = e.changedTouches[0].screenX;
-      const deltaX = touchEndX - touchStartX;
-
-      if (deltaX < -50) nextSlide();
-      if (deltaX > 50) prevSlide();
-    }, { passive: false });
+      // Only trigger if mostly horizontal
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      }
+    }, { passive: true });
   });
 </script>
 </body>

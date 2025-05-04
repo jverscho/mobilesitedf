@@ -1,4 +1,3 @@
-/* Reset and global styles */
 * {
   box-sizing: border-box;
 }
@@ -13,7 +12,6 @@ html, body {
   overflow-y: auto;
 }
 
-/* Layout */
 body {
   display: flex;
   flex-direction: column;
@@ -23,10 +21,9 @@ body {
   padding: 20px 0;
 }
 
-/* Header */
 .now-playing-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .now-playing-title {
@@ -44,35 +41,31 @@ body {
   margin-top: 5px;
 }
 
-/* Carousel Container */
-.double-carousel-container {
+.carousel-container {
   width: 90vw;
   max-width: 400px;
   text-align: center;
-  padding-bottom: 80px;
-  overflow: visible;
+  padding-bottom: 50px;
 }
 
-/* Carousel Items */
-.double-carousel-item {
+.carousel-item {
   display: none;
 }
 
-.double-carousel-item.active {
+.carousel-item.active {
   display: block;
 }
 
-/* Poster Image */
-.double-carousel-item img {
+.carousel-item img {
   width: 100%;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Poster Title and Time */
 .poster-title {
-  margin: 10px 0;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .poster-title h2 {
@@ -89,7 +82,6 @@ body {
   font-weight: 400;
 }
 
-/* View Button */
 .view-button {
   margin-top: 10px;
   padding: 6px 16px;
@@ -105,7 +97,6 @@ body {
   font-weight: 700;
 }
 
-/* Swipe Instruction */
 .swipe-instruction {
   margin-top: 20px;
   font-size: 14px;

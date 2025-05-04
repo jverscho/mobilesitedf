@@ -8,31 +8,33 @@
   <link rel="stylesheet" href="double-feature-style.css" />
 </head>
 <body>
-  <div class="now-playing-header">
-    <h1 class="now-playing-title">NOW PLAYING</h1>
-    <p class="now-playing-dates">May 2nd–May 8th</p>
-  </div>
-
-  <div class="double-carousel-container">
-    <div class="double-carousel-item active">
-      <div class="poster-title">
-        <h2>Thunderbolts*</h2>
-        <div class="time-rating">8:00 PM / PG-13</div>
-      </div>
-      <img src="Thunderbolts.jpg" alt="Thunderbolts">
-      <a href="https://www.sunsetdriveinslo.com/thunderbolts" class="view-button">View Trailer</a>
+  <div class="double-wrapper">
+    <div class="now-playing-header">
+      <h1 class="now-playing-title">NOW PLAYING</h1>
+      <p class="now-playing-dates">May 2nd–May 8th</p>
     </div>
 
-    <div class="double-carousel-item">
-      <div class="poster-title">
-        <h2>The Amateur</h2>
-        <div class="time-rating">10:25 PM / PG-13</div>
+    <div class="double-carousel-container" id="double-carousel">
+      <div class="double-carousel-item active">
+        <div class="poster-title">
+          <h2>Thunderbolts*</h2>
+          <div class="time-rating">8:00 PM / PG-13</div>
+        </div>
+        <img src="Thunderbolts.jpg" alt="Thunderbolts">
+        <a href="https://www.sunsetdriveinslo.com/thunderbolts" class="view-button" target="_blank" rel="noopener noreferrer">View Trailer</a>
       </div>
-      <img src="The Amateur.jpg" alt="The Amateur">
-      <a href="https://www.sunsetdriveinslo.com/the-amateur" class="view-button">View Trailer</a>
-    </div>
 
-    <div class="swipe-instruction">Tap to see next feature</div>
+      <div class="double-carousel-item">
+        <div class="poster-title">
+          <h2>The Amateur</h2>
+          <div class="time-rating">10:25 PM / PG-13</div>
+        </div>
+        <img src="The Amateur.jpg" alt="The Amateur">
+        <a href="https://www.sunsetdriveinslo.com/the-amateur" class="view-button" target="_blank" rel="noopener noreferrer">View Trailer</a>
+      </div>
+
+      <div class="swipe-instruction">Tap to see next feature</div>
+    </div>
   </div>
 
   <script>
@@ -50,9 +52,7 @@
       updateDFCarousel();
     }
 
-    document.querySelector('.double-carousel-container').addEventListener('click', () => {
-      nextDFSlide();
-    });
+    document.getElementById('double-carousel').addEventListener('click', nextDFSlide);
 
     updateDFCarousel();
   </script>

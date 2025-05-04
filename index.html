@@ -35,8 +35,8 @@
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const items = document.querySelectorAll('.carousel-item');
-  let current = 0;
+  const items   = document.querySelectorAll('.carousel-item');
+  let   current = 0;
 
   function updateCarousel() {
     items.forEach((item, i) =>
@@ -52,18 +52,19 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCarousel();
   }
 
+  // initialize
   updateCarousel();
 
   const carousel = document.querySelector('.carousel-container');
 
-  // click-to-advance (ignores links/buttons)
+  // click‐to‐advance (ignores links/buttons)
   carousel.addEventListener('click', e => {
     if (e.target.closest('a') || e.target.closest('button')) return;
     nextSlide();
   });
 
-  // swipe detection
-  let startX = 0, startY = 0, movedX = 0, movedY = 0;
+  // robust swipe → horizontal only
+  let startX=0, startY=0, movedX=0, movedY=0;
 
   carousel.addEventListener('touchstart', e => {
     startX = e.touches[0].screenX;
@@ -77,13 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   carousel.addEventListener('touchend', e => {
-    // only treat horizontal swipes
+    // only block & handle clear horizontal swipes
     if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
-      e.preventDefault(); // block only the horizontal scroll
+      e.preventDefault();
       if (movedX < 0) nextSlide();
-      else           prevSlide();
+      else            prevSlide();
     }
-    // otherwise allow vertical scrolling
+    // everything else (vertical drags) scrolls the page
   }, { passive: false });
 });
 </script>

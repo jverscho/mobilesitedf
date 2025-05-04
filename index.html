@@ -38,23 +38,55 @@
   </div>
 
   <script>
-    const dfItems = document.querySelectorAll('.double-carousel-item');
-    let dfIndex = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+      const items = document.querySelectorAll('.carousel-item');
+      let current = 0;
 
-    function updateDFCarousel() {
-      dfItems.forEach((item, i) => {
-        item.classList.toggle('active', i === dfIndex);
-      });
-    }
+      function updateCarousel() {
+        items.forEach((item, index) => {
+          item.classList.toggle('active', index === current);
+        });
+      }
 
-    function nextDFSlide() {
-      dfIndex = (dfIndex + 1) % dfItems.length;
-      updateDFCarousel();
-    }
+      function nextSlide() {
+        current = (current + 1) % items.length;
+        updateCarousel();
+      }
 
-    document.getElementById('double-carousel').addEventListener('click', nextDFSlide);
+      function prevSlide() {
+        current = (current - 1 + items.length) % items.length;
+        updateCarousel();
+      }
 
-    updateDFCarousel();
+      updateCarousel();
+ 
+      // Add mouse click support to advance carousel
+      document.querySelector('.carousel-container').addEventListener('click', () => {nextSlide();});
+      
+      // Swipe Support
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      function handleGesture() {
+        if (touchEndX < touchStartX - 50) {
+          nextSlide();
+        }
+        if (touchEndX > touchStartX + 50) {
+          prevSlide();
+        }
+      }
+
+      const carousel = document.querySelector('.carousel-container');
+
+      carousel.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, false);
+
+      carousel.addEventListener('touchend', function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+      }, false);
+    });
   </script>
 </body>
 </html>

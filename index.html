@@ -77,10 +77,24 @@
       touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
-    carousel.addEventListener('touchmove', function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-    }, { passive: true });
+carousel.addEventListener('touchend', function (e) {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  let preventDefaultNeeded = false;
+
+  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) { // Added condition
+    preventDefaultNeeded = true;
+    if (deltaX < 0) {
+      nextSlide();
+    } else {
+      prevSlide();
+    }
+  }
+
+  if (preventDefaultNeeded) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
     carousel.addEventListener('touchend', function (e) {
       const deltaX = touchEndX - touchStartX;

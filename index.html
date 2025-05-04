@@ -38,6 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const items = document.querySelectorAll('.carousel-item');
   let current = 0;
 
+  // ——— new: grab your carousel container and all its items
+  const carousel = document.querySelector('.carousel-container');
+  const containers = [ carousel, ...items ];
+
+  // ——— new: hide vertical overflow & only allow horizontal touch‐panning
+  containers.forEach(el => {
+    el.style.overflowY   = 'hidden';
+    el.style.touchAction = 'pan-x'; 
+  });
+
   function updateCarousel() {
     items.forEach((item, i) =>
       item.classList.toggle('active', i === current)
@@ -53,8 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateCarousel();
-
-  const carousel = document.querySelector('.carousel-container');
 
   // click-to-advance (ignores links/buttons)
   carousel.addEventListener('click', e => {
@@ -83,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (movedX < 0) nextSlide();
       else           prevSlide();
     }
-    // otherwise allow vertical scrolling
+    // vertical swipes now fall through to the page scroll
   }, { passive: false });
 });
 </script>

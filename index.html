@@ -35,7 +35,7 @@
 
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
 
- <script>
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     const items = document.querySelectorAll('.carousel-item');
     let current = 0;
@@ -60,36 +60,39 @@
 
     const carousel = document.querySelector('.carousel-container');
 
-    // ✅ Click handling (ignore buttons/links)
+    // 🟡 Handle tap/click
     carousel.addEventListener('click', function (e) {
       if (e.target.closest('a') || e.target.closest('button')) return;
       nextSlide();
     });
 
-    // ✅ Swipe handling with vertical scroll pass-through
+    // 🟢 Robust swipe with scroll passthrough
     let touchStartX = 0;
     let touchStartY = 0;
+    let scrolling = false;
 
     carousel.addEventListener('touchstart', function (e) {
       touchStartX = e.changedTouches[0].screenX;
       touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true }); // Allow scrolling by default
+      scrolling = false;
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', function (e) {
+      const moveY = e.changedTouches[0].screenY;
+      if (Math.abs(moveY - touchStartY) > 10) {
+        scrolling = true; // it's a vertical scroll
+      }
+    }, { passive: true });
 
     carousel.addEventListener('touchend', function (e) {
+      if (scrolling) return; // Don't trigger if it was vertical scroll
+
       const touchEndX = e.changedTouches[0].screenX;
-      const touchEndY = e.changedTouches[0].screenY;
-
       const deltaX = touchEndX - touchStartX;
-      const deltaY = touchEndY - touchStartY;
 
-      // Only act on horizontal swipe
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX < -50) nextSlide();
-        if (deltaX > 50) prevSlide();
-        e.preventDefault(); // Prevent accidental horizontal scroll
-      }
-      // Vertical swipes scroll the page — no preventDefault
-    }, { passive: false }); // Allow us to optionally prevent horizontal scroll
+      if (deltaX < -50) nextSlide();
+      if (deltaX > 50) prevSlide();
+    }, { passive: false });
   });
 </script>
 </body>

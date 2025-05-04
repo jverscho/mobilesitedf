@@ -49,14 +49,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function prevSlide() { current = (current - 1 + items.length) % items.length; updateCarousel(); }
   updateCarousel();
 
-  const carousel = document.querySelector('.carousel-container');
+const carousel = document.querySelector('.carousel-container');
 
-  // click/tap
+  // click-to-advance (ignores links/buttons)
   carousel.addEventListener('click', e => {
     if (e.target.closest('a') || e.target.closest('button')) return;
-    nextSlide();
+    rotateCarousel(1);
   });
 
+  // ←– ADD THESE THREE LISTENERS ––→
   let startX = 0, startY = 0, movedX = 0, movedY = 0;
 
   carousel.addEventListener('touchstart', e => {
@@ -71,13 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   carousel.addEventListener('touchend', e => {
-    // only consider it a swipe if it's mostly horizontal **and** far enough
+    // only treat it as a swipe if horizontal dominates AND is far enough
     if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
-      e.preventDefault();               // block native horizontal scroll
-      if (movedX < 0) nextSlide();      // swipe left → next
-      else           prevSlide();       // swipe right → prev
+      e.preventDefault();              // block only the horizontal scroll
+      if (movedX < 0) rotateCarousel(1);
+      else           rotateCarousel(-1);
     }
-    // if it wasn't a clear horizontal swipe, do nothing — vertical scroll will work
+    // otherwise do nothing → vertical scroll will bubble up
   }, { passive: false });
 });
 </script>

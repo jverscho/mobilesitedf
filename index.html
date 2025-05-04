@@ -36,63 +36,50 @@
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const items = document.querySelectorAll('.carousel-item');
-    let current = 0;
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll('.carousel-item');
+  let current = 0;
 
-    function updateCarousel() {
-      items.forEach((item, index) => {
-        item.classList.toggle('active', index === current);
-      });
-    }
+  function updateCarousel() {
+    items.forEach((item, i) =>
+      item.classList.toggle('active', i === current)
+    );
+  }
+  function nextSlide() { current = (current + 1) % items.length; updateCarousel(); }
+  function prevSlide() { current = (current - 1 + items.length) % items.length; updateCarousel(); }
+  updateCarousel();
 
-    function nextSlide() {
-      current = (current + 1) % items.length;
-      updateCarousel();
-    }
+  const carousel = document.querySelector('.carousel-container');
 
-    function prevSlide() {
-      current = (current - 1 + items.length) % items.length;
-      updateCarousel();
-    }
-
-    updateCarousel();
-
-    const carousel = document.querySelector('.carousel-container');
-
-    // Click to advance unless a link/button is clicked
-    carousel.addEventListener('click', function (e) {
-      if (e.target.closest('a') || e.target.closest('button')) return;
-      nextSlide();
-    });
-
-    // Swipe detection
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-    carousel.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', function (e) {
-      const touchEndX = e.changedTouches[0].screenX;
-      const touchEndY = e.changedTouches[0].screenY;
-
-      const deltaX = touchEndX - touchStartX;
-      const deltaY = touchEndY - touchStartY;
-
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-        e.preventDefault(); // Only prevent horizontal swipes
-        if (deltaX < 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
-      }
-      // vertical swipe → allow page scroll
-    }, { passive: false });
+  // click/tap
+  carousel.addEventListener('click', e => {
+    if (e.target.closest('a') || e.target.closest('button')) return;
+    nextSlide();
   });
+
+  let startX = 0, startY = 0, movedX = 0, movedY = 0;
+
+  carousel.addEventListener('touchstart', e => {
+    startX = e.touches[0].screenX;
+    startY = e.touches[0].screenY;
+    movedX = movedY = 0;
+  }, { passive: true });
+
+  carousel.addEventListener('touchmove', e => {
+    movedX = e.touches[0].screenX - startX;
+    movedY = e.touches[0].screenY - startY;
+  }, { passive: true });
+
+  carousel.addEventListener('touchend', e => {
+    // only consider it a swipe if it's mostly horizontal **and** far enough
+    if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
+      e.preventDefault();               // block native horizontal scroll
+      if (movedX < 0) nextSlide();      // swipe left → next
+      else           prevSlide();       // swipe right → prev
+    }
+    // if it wasn't a clear horizontal swipe, do nothing — vertical scroll will work
+  }, { passive: false });
+});
 </script>
 </body>
 </html>

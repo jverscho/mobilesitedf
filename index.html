@@ -61,25 +61,25 @@
     updateCarousel();
 
     const carousel = document.querySelector('.double-carousel-container');
-    
-    // Mouse click support
-    carousel.addEventListener('click', () => {
-      nextSlide();
-    });
 
-    // Swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
+    if (carousel) {
+      carousel.addEventListener('click', () => {
+        nextSlide();
+      });
 
-    carousel.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-    }, false);
+      let touchStartX = 0;
+      let touchEndX = 0;
 
-    carousel.addEventListener('touchend', function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 50) nextSlide();
-      if (touchEndX > touchStartX + 50) prevSlide();
-    }, false);
+      carousel.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, false);
+
+      carousel.addEventListener('touchend', function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) nextSlide();
+        if (touchEndX > touchStartX + 50) prevSlide();
+      }, false);
+    }
   });
   </script>
 </body>

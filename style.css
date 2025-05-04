@@ -23,7 +23,7 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px 0;
-  touch-action: pan-x;
+  touch-action: pan-y;
   overscroll-behavior-y: auto;
 }
 

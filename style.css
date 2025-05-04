@@ -52,6 +52,7 @@ body {
 
 .carousel-item {
   display: none;
+  touch-action: pan-y;
 }
 
 .carousel-item.active {

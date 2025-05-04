@@ -57,9 +57,11 @@ body {
   max-width: 400px;
   text-align: center;
   padding-bottom: 40px; /* tightened for layout balance */
-  touch-action: pan-x;
   overscroll-behavior-y: auto;
   overflow: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 /* Items */

@@ -46,6 +46,7 @@ body {
   max-width: 400px;
   text-align: center;
   padding-bottom: 50px;
+  touch-action: pan-y;
 }
 
 .carousel-item {

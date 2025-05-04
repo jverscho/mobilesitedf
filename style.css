@@ -1,3 +1,4 @@
+/* Reset and global styles */
 * {
   box-sizing: border-box;
 }
@@ -11,8 +12,7 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-  touch-action: pan-y;
+  overscroll-behavior-y: auto;  /* allow scroll chaining */
 }
 
 body {
@@ -22,8 +22,10 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px 0;
+  touch-action: pan-y; /* this is sufficient */
 }
 
+/* Heading */
 .now-playing-header {
   text-align: center;
   margin-bottom: 30px;
@@ -44,17 +46,17 @@ body {
   margin-top: 5px;
 }
 
+/* Carousel container */
 .carousel-container {
   width: 90vw;
   max-width: 400px;
   text-align: center;
-  padding-bottom: 50px;
-  touch-action: pan-y;
+  padding-bottom: 40px; /* tightened for layout balance */
 }
 
+/* Items */
 .carousel-item {
   display: none;
-  touch-action: pan-y;
 }
 
 .carousel-item.active {
@@ -68,6 +70,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* Poster title */
 .poster-title {
   text-align: center;
   margin-bottom: 10px;
@@ -87,12 +90,12 @@ body {
   font-weight: 400;
 }
 
+/* Button */
 .view-button {
   margin-top: 10px;
   padding: 6px 16px;
   background-color: #ffce10;
   color: #000;
-  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   border: none;
   border-radius: 4px;
@@ -102,8 +105,9 @@ body {
   font-weight: 700;
 }
 
+/* Swipe label */
 .swipe-instruction {
-  margin-top: 0px;
+  margin-top: 8px; /* balanced spacing */
   font-size: 14px;
   color: #ffce10;
   font-weight: 600;

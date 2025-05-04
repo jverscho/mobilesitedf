@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mobile Double Feature</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="double-feature-style.css" />
 </head>
 <body>
-
   <div class="now-playing-header">
     <h1 class="now-playing-title">NOW PLAYING</h1>
     <p class="now-playing-dates">May 2nd–May 8th</p>
@@ -34,7 +33,6 @@
     </div>
   </div>
 
-  <!-- 👇 Instruction placed outside container -->
   <div class="swipe-instruction">Swipe or Click for More</div>
 
   <script>
@@ -62,13 +60,11 @@
 
       const carousel = document.querySelector('.carousel-container');
 
-      // ✅ Prevent advancing if View Trailer clicked
       carousel.addEventListener('click', function (e) {
         if (e.target.closest('a') || e.target.closest('button')) return;
         nextSlide();
       });
 
-      // ✅ Swipe support
       let touchStartX = 0;
       let touchEndX = 0;
 

@@ -12,7 +12,8 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: auto;  /* allow scroll chaining */
+  overscroll-behavior-y: auto;
+  touch-action: pan-y;
 }
 
 body {
@@ -52,6 +53,7 @@ body {
   max-width: 400px;
   text-align: center;
   padding-bottom: 40px; /* tightened for layout balance */
+  touch-action: pan-y;
 }
 
 /* Items */

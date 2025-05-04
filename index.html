@@ -35,34 +35,47 @@
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const items = document.querySelectorAll('.carousel-item');
-  let current = 0;
+  const items    = document.querySelectorAll('.carousel-item');
+  const carousel = document.querySelector('.carousel-container');
+  let   current  = 0;
 
+  // Show only the “current” slide
   function updateCarousel() {
-    items.forEach((item, i) =>
-      item.classList.toggle('active', i === current)
-    );
+    items.forEach((item, i) => {
+      item.classList.toggle('active', i === current);
+    });
   }
+
+  // Temporarily relinquish horizontal capture so vertical scroll can occur
+  function releaseCapture() {
+    carousel.style.touchAction = 'auto';
+    setTimeout(() => {
+      carousel.style.touchAction = 'pan-x';
+    }, 100);  // 100 ms window for vertical scroll
+  }
+
   function nextSlide() {
     current = (current + 1) % items.length;
     updateCarousel();
+    releaseCapture();
   }
+
   function prevSlide() {
     current = (current - 1 + items.length) % items.length;
     updateCarousel();
+    releaseCapture();
   }
 
+  // initialize
   updateCarousel();
 
-  const carousel = document.querySelector('.carousel-container');
-
-  // click-to-advance (ignores links/buttons)
+  // click to advance (but ignore taps on links/buttons)
   carousel.addEventListener('click', e => {
     if (e.target.closest('a') || e.target.closest('button')) return;
     nextSlide();
   });
 
-  // swipe detection
+  // track touch movements
   let startX = 0, startY = 0, movedX = 0, movedY = 0;
 
   carousel.addEventListener('touchstart', e => {
@@ -77,15 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   carousel.addEventListener('touchend', e => {
-    // only treat horizontal swipes
+    // only treat strong horizontal swipes as slides
     if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
-      e.preventDefault(); // block only the horizontal scroll
+      e.preventDefault();  // block horizontal panning
       if (movedX < 0) nextSlide();
       else           prevSlide();
     }
-    // otherwise allow vertical scrolling
+    // otherwise—vertical drags—page scrolls normally
   }, { passive: false });
 });
 </script>
-</body>
-</html>

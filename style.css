@@ -12,7 +12,7 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  touch-action: auto;
   overscroll-behavior-y: auto;
 }
 
@@ -74,6 +74,9 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
+.carousel-nav {
+  touch-action: none;
+}
 /* Poster title */
 .poster-title {
   text-align: center;

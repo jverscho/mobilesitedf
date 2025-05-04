@@ -31,7 +31,7 @@ body {
 .now-playing-header {
   text-align: center;
   margin-bottom: 30px;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .now-playing-title {
@@ -40,7 +40,7 @@ body {
   font-style: italic;
   color: #e6e3df;
   margin: 0;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .now-playing-dates {
@@ -48,7 +48,7 @@ body {
   color: #ffce10;
   font-weight: 500;
   margin-top: 5px;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 /* Carousel container */
@@ -59,18 +59,18 @@ body {
   padding-bottom: 40px; /* tightened for layout balance */
   touch-action: pan-x;
   overscroll-behavior-y: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 /* Items */
 .carousel-item {
   display: none;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .carousel-item.active {
   display: block;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .carousel-item img {
@@ -80,12 +80,12 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   pointer-events: none;  /* clicks/swipes fall through to the container */
   touch-action: none;    /* we don’t need the image to handle anything */
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .carousel-nav {
   touch-action: none;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 /* Poster title */
 .poster-title {
@@ -99,7 +99,7 @@ body {
   color: #e6e3df;
   font-weight: 500;
   margin: 0;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .poster-title .time-rating {
@@ -107,7 +107,7 @@ body {
   color: #ffce10;
   margin-top: 5px;
   font-weight: 400;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 /* Button */
@@ -123,12 +123,12 @@ body {
   text-decoration: none;
   display: inline-block;
   font-weight: 700;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .carousel-nav {
   touch-action: none;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 /* Swipe label */
 .swipe-instruction {
@@ -137,5 +137,5 @@ body {
   color: #ffce10;
   font-weight: 600;
   text-align: center;
-  overflow-y: hidden;
+  overflow: hidden;
 }

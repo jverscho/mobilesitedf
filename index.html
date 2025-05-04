@@ -32,9 +32,7 @@
       <a href="https://www.sunsetdriveinslo.com/the-amateur" target="_blank" rel="noopener noreferrer" class="view-button">View Trailer</a>
     </div>
   </div>
-
   <div class="swipe-instruction">Swipe or Click for Next Feature</div>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const items = document.querySelectorAll('.carousel-item');
@@ -45,19 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
       item.classList.toggle('active', i === current)
     );
   }
-  function nextSlide() { current = (current + 1) % items.length; updateCarousel(); }
-  function prevSlide() { current = (current - 1 + items.length) % items.length; updateCarousel(); }
+  function nextSlide() {
+    current = (current + 1) % items.length;
+    updateCarousel();
+  }
+  function prevSlide() {
+    current = (current - 1 + items.length) % items.length;
+    updateCarousel();
+  }
+
   updateCarousel();
 
-const carousel = document.querySelector('.carousel-container');
+  const carousel = document.querySelector('.carousel-container');
 
   // click-to-advance (ignores links/buttons)
   carousel.addEventListener('click', e => {
     if (e.target.closest('a') || e.target.closest('button')) return;
-    rotateCarousel(1);
+    nextSlide();
   });
 
-  // ←– ADD THESE THREE LISTENERS ––→
+  // swipe detection
   let startX = 0, startY = 0, movedX = 0, movedY = 0;
 
   carousel.addEventListener('touchstart', e => {
@@ -72,13 +77,13 @@ const carousel = document.querySelector('.carousel-container');
   }, { passive: true });
 
   carousel.addEventListener('touchend', e => {
-    // only treat it as a swipe if horizontal dominates AND is far enough
+    // only treat horizontal swipes
     if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
-      e.preventDefault();              // block only the horizontal scroll
-      if (movedX < 0) rotateCarousel(1);
-      else           rotateCarousel(-1);
+      e.preventDefault(); // block only the horizontal scroll
+      if (movedX < 0) nextSlide();
+      else           prevSlide();
     }
-    // otherwise do nothing → vertical scroll will bubble up
+    // otherwise allow vertical scrolling
   }, { passive: false });
 });
 </script>

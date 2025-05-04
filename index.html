@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile Double Feature</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="double-feature-style.css" />
+</head>
+<body>
+  <div class="now-playing-header">
+    <h1 class="now-playing-title">NOW PLAYING</h1>
+    <p class="now-playing-dates">May 2nd–May 8th</p>
+  </div>
+
+  <div class="double-carousel-container">
+    <div class="double-carousel-item active">
+      <div class="poster-title">
+        <h2>Thunderbolts*</h2>
+        <div class="time-rating">8:00 PM / PG-13</div>
+      </div>
+      <img src="Thunderbolts.jpg" alt="Thunderbolts">
+      <a href="https://www.sunsetdriveinslo.com/thunderbolts" class="view-button">View Trailer</a>
+    </div>
+
+    <div class="double-carousel-item">
+      <div class="poster-title">
+        <h2>The Amateur</h2>
+        <div class="time-rating">10:25 PM / PG-13</div>
+      </div>
+      <img src="The Amateur.jpg" alt="The Amateur">
+      <a href="https://www.sunsetdriveinslo.com/the-amateur" class="view-button">View Trailer</a>
+    </div>
+
+    <div class="swipe-instruction">Tap to see next feature</div>
+  </div>
+
+  <script>
+    const dfItems = document.querySelectorAll('.double-carousel-item');
+    let dfIndex = 0;
+
+    function updateDFCarousel() {
+      dfItems.forEach((item, i) => {
+        item.classList.toggle('active', i === dfIndex);
+      });
+    }
+
+    function nextDFSlide() {
+      dfIndex = (dfIndex + 1) % dfItems.length;
+      updateDFCarousel();
+    }
+
+    document.querySelector('.double-carousel-container').addEventListener('click', () => {
+      nextDFSlide();
+    });
+
+    updateDFCarousel();
+  </script>
+</body>
+</html>

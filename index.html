@@ -72,25 +72,21 @@
     let touchEndX = 0;
     let touchEndY = 0;
 
-    carousel.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, false);
+carousel.addEventListener('touchend', function (e) {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
 
-    carousel.addEventListener('touchend', function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
 
-      const deltaX = touchEndX - touchStartX;
-      const deltaY = touchEndY - touchStartY;
+  // Only advance carousel if gesture is strongly horizontal
+  if (Math.abs(deltaX) > 2 * Math.abs(deltaY)) {
+    if (deltaX < -50) nextSlide();
+    else if (deltaX > 50) prevSlide();
+  }
 
-      // Only trigger horizontal swipe if horizontal movement dominates
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX < -50) nextSlide();
-        if (deltaX > 50) prevSlide();
-      }
-      // Vertical swipe will scroll the page normally
-    }, false);
+  // Do not call e.preventDefault() — this allows vertical scroll
+}, { passive: true });
   });
 </script>
 </body>

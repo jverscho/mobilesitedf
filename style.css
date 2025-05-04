@@ -1,4 +1,4 @@
-/* double-feature-style.css (mobile-optimized) */
+/* double-feature-style.css (Mobile Carousel Styling) */
 
 * {
   box-sizing: border-box;
@@ -7,18 +7,19 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'DM Sans', sans-serif;
   background: transparent;
-  height: 100%;
   overflow: hidden;
 }
 
 body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  padding: 40px 0;
   min-height: 100vh;
+  padding: 20px 0;
 }
 
 .now-playing-header {
@@ -27,7 +28,7 @@ body {
 }
 
 .now-playing-title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 600;
   font-style: italic;
   color: #e6e3df;
@@ -35,29 +36,37 @@ body {
 }
 
 .now-playing-dates {
-  font-size: 16px;
+  font-size: 18px;
   color: #ffce10;
   font-weight: 500;
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
-.poster-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
-  max-width: 400px;
-  padding-bottom: 40px;
-}
-
-.poster-card {
-  width: 100%;
+.double-carousel-container {
+  width: 90vw;
   max-width: 400px;
   text-align: center;
+  padding-bottom: 100px;
+  overflow: visible;
+}
+
+.double-carousel-item {
+  display: none;
+}
+
+.double-carousel-item.active {
+  display: block;
+}
+
+.double-carousel-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .poster-title {
+  text-align: center;
   margin-bottom: 10px;
 }
 
@@ -75,15 +84,6 @@ body {
   font-weight: 400;
 }
 
-.poster-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-}
-
 .view-button {
   margin-top: 10px;
   padding: 6px 16px;
@@ -97,28 +97,12 @@ body {
   text-decoration: none;
   display: inline-block;
   font-weight: 700;
-  text-transform: none;
 }
 
-@media (max-width: 480px) {
-  .now-playing-title {
-    font-size: 22px;
-  }
-
-  .now-playing-dates {
-    font-size: 14px;
-  }
-
-  .poster-title h2 {
-    font-size: 18px;
-  }
-
-  .poster-title .time-rating {
-    font-size: 13px;
-  }
-
-  .view-button {
-    font-size: 13px;
-    padding: 6px 12px;
-  }
+.swipe-instruction {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ffce10;
+  font-weight: 600;
+  text-align: center;
 }

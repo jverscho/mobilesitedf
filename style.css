@@ -13,7 +13,7 @@ html, body {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   touch-action: auto;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: none;
 }
 
 body {
@@ -24,7 +24,7 @@ body {
   min-height: 100vh;
   padding: 20px 0;
   touch-action: pan-y;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: none;
 }
 
 /* Heading */
@@ -57,11 +57,13 @@ body {
   max-width: 400px;
   text-align: center;
   padding-bottom: 40px; /* tightened for layout balance */
-  overscroll-behavior-y: auto;
   overflow: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
+  touch-action: pan-x;
+  -webkit-user-drag: none;
+  overscroll-behavior-y: contain;
+  user-drag: none;
 }
 
 /* Items */

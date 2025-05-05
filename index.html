@@ -63,27 +63,36 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // swipe detection
-  let startX = 0, startY = 0, movedX = 0, movedY = 0;
+  let startX = 0, startY = 0, movedX = 0, movedY = 0, isHorizontal = null;
 
   carousel.addEventListener('touchstart', e => {
     startX = e.touches[0].screenX;
     startY = e.touches[0].screenY;
     movedX = movedY = 0;
+    isHorizontal = null;
   }, { passive: true });
 
   carousel.addEventListener('touchmove', e => {
     movedX = e.touches[0].screenX - startX;
     movedY = e.touches[0].screenY - startY;
-  }, { passive: true });
+
+    if (isHorizontal === null) {
+      isHorizontal = Math.abs(movedX) > Math.abs(movedY);
+    }
+
+    if (isHorizontal) {
+      // block the native scroll only for horizontal swipes
+      e.preventDefault();
+    }
+  }, { passive: false });
 
   carousel.addEventListener('touchend', e => {
-    // only treat horizontal swipes
-    if (Math.abs(movedX) > Math.abs(movedY) && Math.abs(movedX) > 50) {
-      e.preventDefault(); // block only the horizontal scroll
+    // only treat horizontal swipes beyond a threshold
+    if (isHorizontal && Math.abs(movedX) > 50) {
       if (movedX < 0) nextSlide();
-      else           prevSlide();
+      else            prevSlide();
     }
-    // otherwise allow vertical scrolling
+    // vertical swipes fall through, allowing page to scroll normally
   }, { passive: false });
 });
 </script>

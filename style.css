@@ -39,7 +39,7 @@ body {
   font-style: italic;
   color: #e6e3df;
   margin: 0;
-  overflow: hidden;
+  overflow: visable;
 }
 
 .now-playing-dates {

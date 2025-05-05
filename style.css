@@ -61,7 +61,7 @@ body {
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
   -webkit-user-drag: none;
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: auto;
   user-drag: none;
 }
 

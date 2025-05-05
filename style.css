@@ -143,3 +143,16 @@ body {
   text-align: center;
   overflow: hidden;
 }
+/* Prevent vertical bounce on headers, titles, buttons, etc. */
+.now-playing-header,
+.now-playing-title,
+.now-playing-dates,
+.poster-title,
+.time-rating,
+.view-button,
+.swipe-instruction {
+  /* contain any overscroll—no bounce */
+  overscroll-behavior: contain;
+  /* ensure touch interactions still work normally */
+  touch-action: manipulation;
+}

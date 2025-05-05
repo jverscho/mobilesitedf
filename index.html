@@ -62,8 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
     nextSlide();
   });
 
-  // swipe detection
-  let startX = 0, startY = 0, movedX = 0, movedY = 0, isHorizontal = null;
+  // swipe detection with direction thresholding
+  let startX = 0,
+      startY = 0,
+      movedX = 0,
+      movedY = 0,
+      isHorizontal = null;
 
   carousel.addEventListener('touchstart', e => {
     startX = e.touches[0].screenX;
@@ -73,26 +77,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   carousel.addEventListener('touchmove', e => {
-    movedX = e.touches[0].screenX - startX;
-    movedY = e.touches[0].screenY - startY;
+    const dx = e.touches[0].screenX - startX;
+    const dy = e.touches[0].screenY - startY;
+    movedX = dx;
+    movedY = dy;
 
+    // decide direction once the user moves more than 10px
     if (isHorizontal === null) {
-      isHorizontal = Math.abs(movedX) > Math.abs(movedY);
+      if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+        isHorizontal = Math.abs(dx) > Math.abs(dy);
+      }
     }
 
+    // block default only if it's a horizontal swipe
     if (isHorizontal) {
-      // block the native scroll only for horizontal swipes
       e.preventDefault();
     }
   }, { passive: false });
 
   carousel.addEventListener('touchend', e => {
-    // only treat horizontal swipes beyond a threshold
+    // only trigger slide change on a confirmed horizontal swipe past 50px
     if (isHorizontal && Math.abs(movedX) > 50) {
       if (movedX < 0) nextSlide();
       else            prevSlide();
     }
-    // vertical swipes fall through, allowing page to scroll normally
+    // vertical swipes simply scroll the page
   }, { passive: false });
 });
 </script>

@@ -12,8 +12,8 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  touch-action: auto;
-  overscroll-behavior-y: contain;
+  touch-action: auto !important;
+  overscoll-behavior: auto  !important;
 }
 
 body {
@@ -59,9 +59,10 @@ body {
   overflow: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  touch-action: pan-x !important;
   -webkit-user-drag: none;
-  overscroll-behavior-y: auto;
+  overscroll-behavior-y: auto !important;
+  overscroll-behavior-x: contain  !important;
   user-drag: none;
 }
 

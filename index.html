@@ -101,7 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (movedX < 0) nextSlide();
       else            prevSlide();
     }
-    // vertical swipes simply scroll the page
+    // **always** forward any vertical drag up to the parent
+    if (!isHorizontal && Math.abs(movedY) > 10) {
+      window.parent.postMessage({
+        type: 'carousel-vertical-swipe',
+        delta: movedY
+      }, '*');
+    }
   }, { passive: false });
 });
 </script>
